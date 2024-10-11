@@ -2,6 +2,9 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+*{
+	box-sizing: border-box;
+}
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -30,6 +33,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #FFFEF8;
+	
 }
 ol, ul {
 	list-style: none;
@@ -52,6 +57,7 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	margin-top: 70px;
 }
 header {
 	display: flex;
@@ -68,14 +74,15 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
+
 }
 
 h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
-;
+
 }
 
 h2{
@@ -125,6 +132,28 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+.filtres{
+	width: 70%;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	margin: 35px  auto;
+} 
+
+.filtres button {
+  background-color:#FFFEF8;
+  font-family: 'Syne';
+  color: #1D6154;
+  padding: 10px 15px;
+  border-radius: 30px;
+  border: 1.5px solid #1D6154;
+  cursor: pointer;
+}
+.filtres button:focus {
+  background-color: #1d6154;
+  color: white;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -137,37 +166,48 @@ li:hover {
 	width: 100%;
 
 }
-#contact {
-	width: 50%;
-margin: auto;
-}
-#contact > * {
-	text-align: center;
 
+.form {
+	width: 40%;
+	margin: auto;
 }
-#contact h2{
+.form > * {
+	text-align: center;
+	
+}
+
+.form h2{
 	margin-bottom: 20px;
 }
-#contact form {
+.form form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input {
+.form input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label {
+.form label {
 	margin: 2em 0 1em 0;
 }
-#contact textarea {
+.form textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+.add-photo-form{
+	width: 70%;
+}
+a {
+	color: black;
+	text-decoration: none;
+	
+}
+
 
 input[type="submit"]{
 	font-family: 'Syne';
@@ -175,9 +215,15 @@ input[type="submit"]{
 	color: white;
 	background-color: #1D6154;
 	margin : 2em auto ;
-	width: 180px;
+	width: 180px;	
 	text-align: center;
-	border-radius: 60px ;
+	border-radius: 60px;
+}
+input[type="submit"]:hover{
+	color: #1d6154;
+	background-color: antiquewhite;
+	border: 1px solid #1d6154;
+	
 }
 
 footer nav ul {
@@ -185,4 +231,133 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
+.error-login{
+	background-color: #b84947;
+	color: white;
+	display: flex;
+	justify-content: center;
+	padding: 10px;
+}
+.edit{
+	width:100vw;
+	height: 50px;
+	background-color: black;
+	color:white;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.edit a {
+	color: white;
+}
+.edit a:visited{
+	color:white;
+}
 
+/*modal*/
+
+.gallery-modal{
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 20px;
+	grid-row-gap: 20px;
+}
+.gallery-modal figure {
+	position: relative;
+}
+.trash-icon {
+	position: absolute;
+	top: 10px; /* Ajuste la position en fonction de tes besoins */
+	right: 10px;
+	color: white ;/* Couleur de l'icône */
+	font-size: 15px; /* Taille de l'icône */
+	background-color: black;
+	padding: 5px;
+	border-radius: 10%;
+	cursor: pointer; /* Pour indiquer qu'il s'agit d'un élément cliquable */
+}
+.gallery-modal img{
+	width: 100%;
+}
+.modal {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgb(0, 0, 0, 0, 6);
+}
+ 
+.modal-wrapper {
+	overflow: auto;
+    width: 600px;
+	max-width: calc(100vh - 20px);
+	max-height: calc(100vh - 20px);
+	padding: 20px;
+	background-color: white;
+
+}
+.modal-wapper hr{
+	margin-top: 30px;
+	width: 100%;
+}
+.close-button-container{
+	display: flex;
+	justify-content: end;
+
+}
+.modal-buttons-container{
+	display: flex;
+	justify-content: space-between;
+}
+.js-modal-close{
+background-color: white;
+border: none;
+font-weight: bold;
+font-size: 18px;
+cursor: pointer;
+
+}
+.js-modal-back{
+background-color: white;
+border: none;
+font-weight: bold;
+font-size: 18px;
+cursor: pointer;
+}
+h3{
+	text-align: center;
+	display: block;
+	font-family: 'Work Sans';
+	font-size: 20px;
+	font-weight: 700;
+	margin: 20px;
+}
+hr{
+	margin: 50px 0 10px 0;
+}
+.button-modal-container{
+	display: flex;
+	justify-content: center;
+}
+.add-photo-button{
+	padding: 10px 20px;
+	width: 250px;
+	border: 1px solid #1D6154;
+	border-radius: 25px;
+	font-family: 'Syne';
+	color: white;
+	background-color: #1D6154;
+	cursor: pointer;
+	margin-top: 25px;
+}
+.add-modal{
+	display: none;
+}

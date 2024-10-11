@@ -8,16 +8,66 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
+	<script src="https://kit.fontawesome.com/0c3edeb19a.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
+	
+<aside 
+id="modal1"
+class="modal"
+aria-hidden="true"
+role="dialog"
+aria-labelledby="titlemodal"
+style="display: none">
+   
+<div class="modal-wrapper js-modal-stop">
+  <div class="modal-gallery">
+	 <div class="close-button-container">
+		<button class="js-modal-close">
+			<i class="fa-solid fa-xmark"></i>
+		</button>
+	 </div>
+	 <h3>Galerie photo</h3>
+	 <div class="gallery-modal"></div>
+	 <hr/>
+	 <div class="button-modal-container">
+	 <button class="add-photo-button">Ajouter une photo</button>
+	 </div>
+  </div>
+  <!---->
+  <div class="add-modal">
+	<div class="modal-buttons-container">
+        <button class="js-modal-back">
+			<i class="fa-solid fa-arrow-left"></i>
+		</button>
+		<button class="js-modal-close">
+			<i class="fa-solid fa-xmark"></i>
+		</button>
+	</div>
+
+	<h3>Ajout photo</h3>
+	<div class="form add-photo-form">
+        <form action="#" method="post">
+			<label for="title">Titre</label>
+			<input type="text" name="title" id="title" />
+			<label for="category">Catégorie</label>
+			<input type="category" name="category" id="category" />
+            <hr/>
+			<input type="submit" value="Valider">
+		</form>
+	</div>
+   </div>
+</div>
+</aside>
+
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li>login</li>
+			<li><a href="#portfolio">projets</a></li>
+			<li><a href="#contact">contact</a></li>
+			<li><a href="./js/login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -26,7 +76,7 @@
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
-	/*	</figure>
+		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
 			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
@@ -36,6 +86,10 @@
 	</section>
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
+		<p><i class="fa-regular fa-pen-to-square"></i>modifier</p>
+		<div class="filtres">
+		<button id="0">Tous</button>
+		</div>
 		<div class="gallery">
 			<!-- <figure>
 				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
@@ -83,7 +137,7 @@
 			</figure> -->
 		</div>
 	</section>
-	<section id="contact">
+	<div class="form">
 		<h2>Contact</h2>
 		<p>Vous avez un projet ? Discutons-en !</p>
 		<form action="#" method="post">
