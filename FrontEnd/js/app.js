@@ -134,8 +134,13 @@ displayAdminMode();
     modal.removeAttribute("aria-hidden")
     modal.setAttribute("aria-modal", "true");
     modal.addEventListener("click", closeModal);
-    modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
-    modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
+    modal.
+    querySelectorAll(".js-modal-close")
+    .forEach((e) => e.addEventListener("click", closeModal))
+
+    modal
+    .querySelector(".js-modal-stop")
+    .addEventListener("click", stopPropagation);
  };
  const closeModal = function (e) {
     if (modal === null) return;
@@ -211,7 +216,29 @@ displayAdminMode();
             alert("Impossible de supprimer le projet pour le moment.");
         }
     }
-    //modal switch
+    //Toggle function
     
-  
+    const addPhotoButton = document.querySelector(".add-photo-button");
+    const backButton = document.querySelector(".js-modal-back");
 
+    addPhotoButton.addEventListener("click",toggleModal);
+    backButton.addEventListener("click", toggleModal);
+    
+  function toggleModal (){
+    const modalGallery = document.querySelector(".modal-gallery");
+    const addModal = document.querySelector(".add-modal")
+    if (modalGallery.style.display === "block" || 
+        modalGallery.style.display === ""
+    )
+     {
+        modalGallery.style.display = "none";
+        addModal.style.display = "block";
+    }else{
+        modalGallery.style.display = "block";
+        addModal.style.display = "none";
+        
+    }
+}
+    
+//  Add photo input
+document.querySelector('#file').style.display = 'none';
