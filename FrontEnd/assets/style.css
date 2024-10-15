@@ -192,6 +192,12 @@ li:hover {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+.form select {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
 .form label {
 	margin: 2em 0 1em 0;
 }
@@ -358,33 +364,54 @@ hr{
 	cursor: pointer;
 	margin-top: 25px;
 }
- .file-section{
-	background-color: #E8F1F6;
+.file-section {
 	display: flex;
+	background-color: #E8F1F6;
 	flex-direction: column;
 	align-items: center;
 	padding: 10px;
+	width: 100%;
+	max-width: 500px;
+	margin: 0 auto; /*center orizzontalment*/
  }
- .file-section label{
+.file-section label{
 	padding: 10px 20px;
-	width: 170px;
+	margin-top: 10px;
 	border-radius: 25px;
 	font-family: 'Syne';
 	color: white;
+	cursor: pointer;
 	background-color: #B9C5CC;
 	color: #306685;
-	cursor: pointer;
-	margin-top: 25px;
+	width: 170px;
 	text-align: center;
- }
+}
 .fa-image{
 color: #B9C5CC;	
-font-size: 60px;
+font-size: 50px;
 margin-top: 5px;
 }
-.form select{
-	height: 50px;
-	font-size: 1.2em;
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+.icon-container{
+	display: flex;
+	justify-content: center;
+}
+.picture-loaded{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    text-align: center;
+}
+#photo-container{
+	width: 100%;
+	margin-bottom: 10px;
+	display: flex;
+	justify-content: center;
+}
+#photo-container img{
+	width: 100%;
+	max-width: 300px;
+}
+p{
+	margin-top: 10px;
+	color: #306685;
 }
