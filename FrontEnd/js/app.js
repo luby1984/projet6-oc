@@ -263,6 +263,35 @@ document.getElementById("file").addEventListener("change", function (event){
         alert("Veuillez sélectionner une image au format JPG ou PNG");
     }
 });
+//handle picture submit 
+document.getElementById("picture-form").addEventListener("submit", handleSubmit);
+
+async function handleSubmit(event) {
+    event.preventDefault();
+    const hasImage = document.querySelector("#photo-container").firstChild;
+    console.log("hasImage:", hasImage);
+    
+//     let response = await fetch(loginApi, {
+//     method: "POST", 
+//     headers: {
+//         "Content-Type": "application/json", 
+        
+//     },
+//     body: JSON.stringify(user),
+//  });
+//  if(response.status != 200){
+//     const errorBox = document.createElement("div");
+//     errorBox.className = "error-login";
+//     errorBox.innerHTML = "il y a un erreur";
+//     document.querySelector("form").prepend(errorBox);
+// }else{
+//     let result = await response.json();
+//     const token = result.token;
+//  sessionStorage.setItem("authToken", token);
+//  window.location.href = "../index.html";
+//  }
+}
+
 
 
 
