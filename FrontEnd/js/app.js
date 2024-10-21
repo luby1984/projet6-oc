@@ -47,7 +47,8 @@ function createWorks(work) {
     trashIcon.classList.add("fa-solid", "fa-trash-can", "trash-icon");
     //ajoute l'evenement por la suppression
     trashIcon.addEventListener('click', function (event) {
-        event.preventDefault
+        event.preventDefault();
+        event.stopPropagation();
         deleteWork(work.id, figureClone); // Appel de la fonction deleteWork
     });
     figureClone.appendChild(trashIcon);
@@ -276,7 +277,7 @@ document.getElementById('category').addEventListener('change', function () {
 titleInput.addEventListener("input", function () {
     titleValue = titleInput.value;
     console.log("Titre actuel:", titleValue);
-})
+});
 
 document
     .getElementById("picture-form")
@@ -292,36 +293,38 @@ async function handleSubmit(event) {
         console.log("hasImage and titleValue is false");
     }
 
-    // crééz un nouvel objet formData
+    // Creazione di un nuovo oggetto formData
     let work = {
         image: document.getElementById("file").files[0],
         title: document.getElementById("title").value,
         category: document.getElementById("category").value
-    }
-    let formData = new FormData(event.target)
-    // formData.append("image" , work.image )
-    // formData.append("title" , work.title )   
-    // formData.append("category" , work.category )
+    };
+
+    // Aggiunta dei dati al formData
+    let formData = new FormData();
+    formData.append("image", work.image);
+    formData.append("title", work.title);
+    formData.append("category", work.category);
+
     console.log(formData);
 
     const token = sessionStorage.authToken;
     let response = await fetch('http://localhost:5678/api/works', {
         method: "POST",
         headers: {
-            Accept: "application/json",
+            // Non impostare Content-Type, fetch lo imposterà automaticamente
             Authorization: "Bearer " + token,
-
         },
-        body: JSON.stringify(formData),
+        body: formData, // Invia direttamente il formData
     });
-    if (response.status != 200) {
+
+    if (response.status !== 200) {
         const errorBox = document.createElement("div");
         errorBox.className = "error-login";
         errorBox.innerHTML = "il y a un erreur";
         document.querySelector("form").prepend(errorBox);
     } else {
         let result = await response.json();
-        console.log(result)
-
+        console.log(result);
     }
 }
