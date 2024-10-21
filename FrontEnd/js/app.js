@@ -241,15 +241,17 @@ function toggleModal() {
 }
 
 //  Add photo input
+let img = document.createElement("img");
+let file;
 document.querySelector("#file").style.display = "none"
 
 document.getElementById("file").addEventListener("change", function (event) {
-    const file = event.target.files[0];
+     file = event.target.files[0];
     if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
         if (file.size <= 4 * 1024 * 1024) { // 4MB max
             const reader = new FileReader();
             reader.onload = function (e) {
-                const img = document.createElement("img");
+               // const img = document.createElement("img");
                 img.src = e.target.result;
                 img.alt = "Uploaded Photo";
                 document.getElementById("photo-container").appendChild(img);
@@ -270,7 +272,7 @@ let titleValue = "";
 
 let selectedValue = "1";
 
-document.getElementById('category').addEventListener('change', function () {
+document.getElementById("category").addEventListener("change", function () {
     selectedValue = this.value;
 });
 
@@ -278,53 +280,52 @@ titleInput.addEventListener("input", function () {
     titleValue = titleInput.value;
     console.log("Titre actuel:", titleValue);
 });
+ const addPictureForm = document.getElementById("picture-form");
 
-document
-    .getElementById("picture-form")
-    .addEventListener("submit", handleSubmit);
-
-async function handleSubmit(event) {
+ addPictureForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const hasImage = document.querySelector("#photo-container").firstChild;
-
     if (hasImage && titleValue) {
+        const formData = new FormData();
+        if (file) {
+         formData.append("image", file);
+        }
+     
+         formData.append("title", titleValue);
+         formData.append("category", selectedValue);
+     
+         const token = sessionStorage.authToken;
+         if(!token) {
+             console.log("Token d'authentification manquant.");
+             return;
+         }
+     
+         try {
+             let response = await fetch('http://localhost:5678/api/works', {
+                 method: "POST",
+                 headers: {
+                     Authorization: "Bearer " + token,
+                 },
+                 body: formData, // Invia direttamente il formData
+             });
+     
+             if (response.status !== 200) {
+                 const errorBox = document.createElement("div");
+                 errorBox.className = "error-login";
+                 errorBox.innerHTML = "il y a un erreur";
+                 document.querySelector("form").prepend(errorBox);
+             } else {
+                 let result = await response.json();
+                 console.log(result);
+             }
+         } catch (error) {
+             console.error("Errore durante l'invio della richiesta:", error);
+         }
         console.log("hasImage and titleValue is true");
     } else {
-        console.log("hasImage and titleValue is false");
+        alert("Vuillez remplir touts les champes");
     }
 
     // Creazione di un nuovo oggetto formData
-    let work = {
-        image: document.getElementById("file").files[0],
-        title: document.getElementById("title").value,
-        category: document.getElementById("category").value
-    };
-
-    // Aggiunta dei dati al formData
-    let formData = new FormData();
-    formData.append("image", work.image);
-    formData.append("title", work.title);
-    formData.append("category", work.category);
-
-    console.log(formData);
-
-    const token = sessionStorage.authToken;
-    let response = await fetch('http://localhost:5678/api/works', {
-        method: "POST",
-        headers: {
-            // Non impostare Content-Type, fetch lo imposterà automaticamente
-            Authorization: "Bearer " + token,
-        },
-        body: formData, // Invia direttamente il formData
-    });
-
-    if (response.status !== 200) {
-        const errorBox = document.createElement("div");
-        errorBox.className = "error-login";
-        errorBox.innerHTML = "il y a un erreur";
-        document.querySelector("form").prepend(errorBox);
-    } else {
-        let result = await response.json();
-        console.log(result);
-    }
-}
+ 
+});
