@@ -54,6 +54,8 @@ function createWorkClone(work, originalFigure) {
     // Aggiungi l'evento per la cancellazione
     trashIcon.addEventListener('click', function (event) {
         event.stopPropagation();
+        event.preventDefault();
+        console.log(`Cliccato sul cestino per l'elemento con ID: ${work.id}`); // Log di debug
         deleteWork(work.id, figureClone, event); // Chiamata alla funzione deleteWork
     });
 
@@ -99,6 +101,7 @@ async function filterCategory() {
         button.addEventListener("click", (e) => {
            const btnId = e.target.id;
             gallery.innerHTML = "";
+            document.querySelector(".gallery-modal").innerHTML = "";
             if (btnId !== "0") {
                 const worksTriCategory = worksbook.filter((work) => {
                     return work.categoryId == btnId;
@@ -124,7 +127,21 @@ function displayAdminMode() {
             '<p><a href= "#modal1" class="js-modal"><i class="fa-regular fa-pen-to-square"></i>Mode édition</a></p>';
         document.body.prepend(editBanner);
         document.querySelector(".log-button").textContent = "logout";
-    }
+        //creation de link "mode editio"
+        const editionMode = document.createElement("a");
+        editionMode.className = "js-modal mode-edition";
+        editionMode.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>Mode édition';
+        editionMode.href = "#modal1" 
+        document.querySelector(".projets-container").append(editionMode);
+        console.log(editionMode);
+        console.log( document.querySelector("#portfolio"))
+        //pour casher le buttons filtres quand on ete dans la modalite mode editio
+        filtres.style.display = "none"; 
+        document.querySelector(".projets-title").classList.add("edit-mode");
+        }else{
+            document.querySelector(".projets-title").classList.remove("edit-mode");
+        }
+    
 }
 displayAdminMode();
 
@@ -189,7 +206,7 @@ document.querySelectorAll(".js-modal").forEach(a => {
 });
 window.addEventListener("keydown", function (e) {
     if (e.key === "Escape" || e.key === "Esc") {
-       // closeModal(e);
+
     }
     if (e.key === "Tab" && modal !== null) {
         focusInModal(e)
@@ -204,6 +221,7 @@ async function deleteWork(workId, figureElement, event) {
     if (!confirmation) return; // Si l'utilisateur annule
 
     try {
+        console.log(`Richiesta di cancellazione dell'elemento con ID: ${workId}`);
         const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
             method: 'DELETE',
             headers: {
@@ -215,10 +233,9 @@ async function deleteWork(workId, figureElement, event) {
         if (response.ok) {
             console.log(`Projet avec ID ${workId} supprimé`);
             // Supprimer l'élément du DOM
+            console.log('Elemento da rimuovere', figureElement);
             figureElement.remove();
             
-            gallery.innerHTML = "";
-            displayWorks();
         } else {
             console.error("Erreur lors de la suppression", response.statusText);
             alert("Une erreur s'est produite lors de la suppression.");
