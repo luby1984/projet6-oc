@@ -26,10 +26,11 @@ async function displayWorks() {
 displayWorks();
 
 function createWorks(work) {
-    //console.log (work)
+
     const figure = document.createElement("figure");
     const img = document.createElement("img")
     const figcaption = document.createElement("figcaption");
+
     img.src = work.imageUrl;
     figcaption.textContent = work.title;
     figure.classList.add("galleryStyle");
@@ -37,24 +38,28 @@ function createWorks(work) {
     figure.appendChild(figcaption);
     gallery.appendChild(figure);
 
-    const figureClone = figure.cloneNode(true);
+    createWorkClone(work, figure);
+}
+function createWorkClone(work, originalFigure) {
+    const figureClone = originalFigure.cloneNode(true);
     const figcaptionClone = figureClone.querySelector("figcaption");
+    
     if (figcaptionClone) {
         figcaptionClone.remove(); // Rimuove la descrizione
     }
 
     const trashIcon = document.createElement("i");
     trashIcon.classList.add("fa-solid", "fa-trash-can", "trash-icon");
-    //ajoute l'evenement por la suppression
+
+    // Aggiungi l'evento per la cancellazione
     trashIcon.addEventListener('click', function (event) {
-        event.preventDefault();
         event.stopPropagation();
-        deleteWork(work.id, figureClone); // Appel de la fonction deleteWork
+        deleteWork(work.id, figureClone, event); // Chiamata alla funzione deleteWork
     });
+
     figureClone.appendChild(trashIcon);
 
-
-    // Ajouter la figure clonée à la gallery-modal
+    // Aggiungi la figura clonata alla gallery-modal
     document.querySelector(".gallery-modal").appendChild(figureClone);
 }
 /*affichage des button */
@@ -92,7 +97,7 @@ async function filterCategory() {
     const buttons = document.querySelectorAll(".filtres button");
     buttons.forEach((button) => {
         button.addEventListener("click", (e) => {
-            btnId = e.target.id;
+           const btnId = e.target.id;
             gallery.innerHTML = "";
             if (btnId !== "0") {
                 const worksTriCategory = worksbook.filter((work) => {
@@ -118,6 +123,7 @@ function displayAdminMode() {
         editBanner.innerHTML =
             '<p><a href= "#modal1" class="js-modal"><i class="fa-regular fa-pen-to-square"></i>Mode édition</a></p>';
         document.body.prepend(editBanner);
+        document.querySelector(".log-button").textContent = "logout";
     }
 }
 displayAdminMode();
@@ -183,7 +189,7 @@ document.querySelectorAll(".js-modal").forEach(a => {
 });
 window.addEventListener("keydown", function (e) {
     if (e.key === "Escape" || e.key === "Esc") {
-        closeModal(e);
+       // closeModal(e);
     }
     if (e.key === "Tab" && modal !== null) {
         focusInModal(e)
@@ -191,7 +197,9 @@ window.addEventListener("keydown", function (e) {
     }
 });
 
-async function deleteWork(workId, figureElement) {
+async function deleteWork(workId, figureElement, event) {
+     event.stopPropagation();
+
     const confirmation = confirm("Êtes-vous sûr de vouloir supprimer ce projet ?");
     if (!confirmation) return; // Si l'utilisateur annule
 
@@ -208,6 +216,9 @@ async function deleteWork(workId, figureElement) {
             console.log(`Projet avec ID ${workId} supprimé`);
             // Supprimer l'élément du DOM
             figureElement.remove();
+            
+            gallery.innerHTML = "";
+            displayWorks();
         } else {
             console.error("Erreur lors de la suppression", response.statusText);
             alert("Une erreur s'est produite lors de la suppression.");

@@ -130,7 +130,10 @@ li:hover {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	
+}
+.mode-edition{
+	padding-top: 10px;
 }
 .filtres{
 	width: 70%;
@@ -139,7 +142,10 @@ li:hover {
 	align-items: center;
 	margin: 35px  auto;
 } 
-
+.active-filters {
+	background-color: #1d6154;
+	color: white;
+}
 .filtres button {
   background-color:#FFFEF8;
   font-family: 'Syne';
@@ -329,8 +335,17 @@ border: none;
 font-weight: bold;
 font-size: 18px;
 cursor: pointer;
-
 }
+.projets-title{
+	margin-bottom: 0;
+}
+
+.projets-container{
+	display: flex;
+	justify-content: center;
+	gap:10px;
+}
+
 .js-modal-back{
 background-color: white;
 border: none;
